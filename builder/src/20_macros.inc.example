@@ -1,0 +1,27 @@
+// ============================================================
+//  Fragment 20 :: MACROS -- content of the "CMD" group. (SAMPLE)
+//
+//  This is a TEMPLATE. Copy it to 20_macros.inc and fill in your
+//  own macros: the real file is excluded from git because it
+//  usually contains service data (passwords, logins, commands).
+//
+//  Rules:
+//   * each macro is an array:
+//       static const uint8_t name[] = { TOKENS };
+//   * each macro gets one line in cmd_items[]:
+//       {"MENU NAME", action, mode, array, sizeof(array)},
+//   * the menu item count is computed automatically (sizeof);
+//   * actions: A_CMD = type and press Enter;
+//     special scenarios: A_TECH, A_SUDO, A_NET, A_VID, A_SERIAL,
+//     A_REBOOT, A_ENERGY -- their logic lives in 50_engine.inc;
+//   * tokens: LAT_* (latin, _CAP = with Shift), DIG_* (digits),
+//     SYM_* (symbols). Full reference: builder\README.md
+// ============================================================
+
+// ================= CMD =================
+static const uint8_t example_cmd[] = { LAT_E,LAT_C,LAT_H,LAT_O,SYM_SPACE,DIG_1,DIG_2,DIG_3 };
+
+static const Item cmd_items[] = {
+    {"EXAMPLE", A_CMD, SIMPLE, example_cmd, sizeof(example_cmd)}
+};
+
