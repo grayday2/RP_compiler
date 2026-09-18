@@ -22,14 +22,19 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
-if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/main.cpp")
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../main.cpp")
+    set(MAIN_CPP_SOURCE "${CMAKE_CURRENT_LIST_DIR}/../main.cpp")
+elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/main.cpp")
+    set(MAIN_CPP_SOURCE "${CMAKE_CURRENT_LIST_DIR}/main.cpp")
+else()
     message(FATAL_ERROR "Add the current main.cpp before building firmware")
 endif()
-add_executable(blink_zero main.cpp)
+add_executable(blink_zero "${MAIN_CPP_SOURCE}")
 pico_enable_stdio_usb(blink_zero 0)
 pico_enable_stdio_uart(blink_zero 0)
 target_include_directories(blink_zero PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}"
+    "${CMAKE_CURRENT_LIST_DIR}/.."
     "${PICO_SDK_PATH}/lib/tinyusb/src"
     "${PICO_SDK_PATH}/lib/tinyusb/hw"
 )

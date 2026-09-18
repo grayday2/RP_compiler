@@ -35,9 +35,11 @@ def build(root):
     cmake = root / 'cmake/bin/cmake.exe'
     toolbin = root / 'toolchain/bin'
     python = root / 'python/python.exe'
+    main_cpp = root.parent / 'main.cpp' if (root.parent / 'main.cpp').is_file() else root / 'main.cpp'
+    root_output = root.parent / 'output'
     required = [cmake, python, toolbin / 'make.exe', toolbin / 'arm-none-eabi-gcc.exe',
                 toolbin / 'arm-none-eabi-g++.exe', toolbin / 'arm-none-eabi-objcopy.exe',
-                root / 'main.cpp', root / 'uf2conv.py', root / 'CMakeLists.txt',
+                main_cpp, root / 'uf2conv.py', root / 'CMakeLists.txt',
                 root / 'pico-sdk/pico_sdk_init.cmake', root / 'pico-sdk/lib/tinyusb/src/tusb.h',
                 root / 'libraries/ru_keys/ru_keys.h', root / 'libraries/ssd1306/ssd1306_i2c.c']
     with log_path.open('w', encoding='utf-8') as log:
@@ -96,6 +98,11 @@ def build(root):
             if not size or size % 512:
                 raise RuntimeError('Invalid UF2 output size')
             temporary_uf2.replace(output / 'firmware.uf2')
+            try:
+                root_output.mkdir(exist_ok=True)
+                shutil.copy2(output / 'firmware.uf2', root_output / 'firmware.uf2')
+            except OSError:
+                pass
             display.step(6, 'Готово')
             display.banner('ГОТОВО! Прошивка успешно создана', 'success')
             say('SUCCESS: output/firmware.uf2 (' + str(size) + ' bytes)', 'success')

@@ -7,10 +7,10 @@ if not exist "%PS%" (
     exit /b 1
 )
 rem ExecutionPolicy applies to this process only; registry and machine policy are unchanged.
-"%PS%" -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%~dp0first_setup.ps1" %*
+"%PS%" -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%~dp0compiler\first_setup.ps1" %*
 set "RESULT=%ERRORLEVEL%"
 if not "%RESULT%"=="0" (
-    echo Setup failed. Read debug\logs\setup.log in the project folder.
+    echo Setup failed. Read compiler\debug\logs\setup.log in the project folder.
     pause
     exit /b %RESULT%
 )

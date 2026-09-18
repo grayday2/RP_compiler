@@ -557,16 +557,21 @@ def compile_firmware():
         pause()
         return
 
-    build_script = BASE.parent / "scripts" / "build_firmware.py"
-    bundled_py = BASE.parent / "python" / "python.exe"
+    build_script = BASE.parent / "compiler" / "scripts" / "build_firmware.py"
+    if not build_script.exists():
+        build_script = BASE.parent / "scripts" / "build_firmware.py"
+
+    bundled_py = BASE.parent / "compiler" / "python" / "python.exe"
+    if not bundled_py.exists():
+        bundled_py = BASE.parent / "python" / "python.exe"
 
     if os.name == "nt":
         if not bundled_py.exists():
-            print("   [!] Портативный Python не найден в python\\python.exe.")
+            print("   [!] Портативный Python не найден в compiler\\python\\python.exe.")
             print("       Запустите first_setup.cmd для установки окружения сборки.")
             pause()
             return
-        print("   Запуск компилятора через scripts\\build_firmware.py...\n")
+        print("   Запуск компилятора через compiler\\scripts\\build_firmware.py...\n")
         res = os.system(f'"{bundled_py}" -I -S -B "{build_script}"')
     else:
         print("   Запуск сборки через scripts/build_firmware.py...\n")

@@ -20,7 +20,8 @@ def package():
     destination.parent.mkdir(exist_ok=True)
     entries = {}
     for name in ROOT_FILES:
-        entries[name] = (ROOT / name).read_bytes()
+        path = (ROOT / name) if (ROOT / name).exists() else (ROOT.parent / name)
+        entries[name] = path.read_bytes()
     for directory in DIRECTORIES:
         for path in sorted((ROOT / directory).rglob('*')):
             if path.is_file() and not path.is_symlink() and path.suffix in ALLOWED_SUFFIXES and '__pycache__' not in path.parts and not any(part in ('reports', 'logs') for part in path.relative_to(ROOT).parts):
