@@ -1,0 +1,47 @@
+# ---- RP_COMPILER ----
+# Артефакты сборки компилятора RP2040
+/build/
+/output/*
+!/output/.gitkeep
+/tmp/*
+!/tmp/.gitkeep
+/cmake/bin/*
+!/cmake/bin/.gitkeep
+/toolchain/bin/*
+!/toolchain/bin/.gitkeep
+/python/*
+!/python/.gitkeep
+/pico-sdk/*
+!/pico-sdk/.gitkeep
+*.log
+*.exe
+*.o
+*.elf
+*.bin
+*.uf2
+__pycache__/
+*.pyc
+/compiler_structure_report.txt
+/compiler_structure_report.txt.*.bak
+
+/.local-tools/
+/rp2040_final_audit_*.txt
+
+/.audit-transfer/
+/.setup-cache/
+/.setup-work/
+/.setup.lock
+/debug/logs/
+/debug/reports/
+/debug/setup.lock
+
+# Чувствительные данные билдера (пароли, логины, служебные команды)
+# В репозитории хранятся только безопасные шаблоны *.example.
+builder/data/auth.txt
+builder/data/support.txt
+builder/src/20_macros.inc
+builder/out/
+
+# Служебное
+.DS_Store
+Thumbs.db
