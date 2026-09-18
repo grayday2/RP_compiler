@@ -1,5 +1,5 @@
 // ============================================================
-//  Fragment 20 :: MACROS -- content of the "CMD" group. (SAMPLE)
+//  Fragment 20 :: MACROS -- content of the "CMD" group. (TEMPLATE)
 //
 //  This is a TEMPLATE. Copy it to 20_macros.inc and fill in your
 //  own macros: the real file is excluded from git because it
@@ -19,9 +19,28 @@
 // ============================================================
 
 // ================= CMD =================
-static const uint8_t example_cmd[] = { LAT_E,LAT_C,LAT_H,LAT_O,SYM_SPACE,DIG_1,DIG_2,DIG_3 };
+static const uint8_t techlogin_text[] = { LAT_T,LAT_E,LAT_S,LAT_T };
+static const uint8_t techpass_text[]  = { LAT_P,LAT_A,LAT_S,LAT_S };
+static const uint8_t sudopasswd_cmd[] = { LAT_S,LAT_U,LAT_D,LAT_O };
+static const uint8_t cdautorun_cmd[]  = { LAT_E,LAT_C,LAT_H,LAT_O };
+static const uint8_t vidreg_login[]   = { LAT_A,LAT_D,LAT_M,LAT_I,LAT_N };
+static const uint8_t vidreg_pass[]    = { LAT_P,LAT_A,LAT_S,LAT_S };
+static const uint8_t serialnom_cmd[]  = { LAT_S,LAT_E,LAT_R,LAT_I,LAT_A,LAT_L };
+static const uint8_t reboot_cmd[]     = { LAT_R,LAT_E,LAT_B,LAT_O,LAT_O,LAT_T };
+static const uint8_t yandex_cmd[]     = { LAT_Y,LAT_A,LAT_N,LAT_D,LAT_E,LAT_X };
+static const uint8_t dion_cmd[]       = { LAT_D,LAT_I,LAT_O,LAT_N };
+static const uint8_t zsopriv_cmd[]    = { LAT_P,LAT_R,LAT_I,LAT_V };
 
 static const Item cmd_items[] = {
-    {"EXAMPLE", A_CMD, SIMPLE, example_cmd, sizeof(example_cmd)}
+    {"TECHLOCAL",   A_TECH,     SIMPLE,     techlogin_text, sizeof(techlogin_text)},
+    {"SUDO PASSWD", A_SUDO,     AUTO_STEPS, sudopasswd_cmd, sizeof(sudopasswd_cmd)},
+    {"CD AUTORUN",  A_CMD,      SIMPLE,     cdautorun_cmd,  sizeof(cdautorun_cmd)},
+    {"NET DISKS",   A_NET,      AUTO_STEPS, NULL,           0},
+    {"VIDREG",      A_VID,      SIMPLE,     vidreg_login,   sizeof(vidreg_login)},
+    {"SERIALNOM",   A_SERIAL,   SIMPLE,     serialnom_cmd,  sizeof(serialnom_cmd)},
+    {"SUDO REBOOT", A_REBOOT,   SIMPLE,     reboot_cmd,     sizeof(reboot_cmd)},
+    {"ENERGY SAVE", A_ENERGY,   AUTO_STEPS, NULL,           0},
+    {"YANDEX",      A_CMD,      SIMPLE,     yandex_cmd,     sizeof(yandex_cmd)},
+    {"DION",        A_CMD,      SIMPLE,     dion_cmd,       sizeof(dion_cmd)},
+    {"ZSOPRIV",     A_CMD,      SIMPLE,     zsopriv_cmd,    sizeof(zsopriv_cmd)}
 };
-

@@ -1,0 +1,20 @@
+{
+  "status": "strong_candidate_not_full_tree_verified",
+  "repository": "https://github.com/hathach/tinyusb",
+  "commit": "aa410008e8e74b0727f8c30a1ec109ff2c37efc6",
+  "commit_time_utc": "2026-07-17T09:40:34Z",
+  "reported_file_time": "2026-07-17T12:40:34+03:00",
+  "files": {
+    "src/tusb.h": {
+      "bytes": 3979,
+      "sha256": "41447bbc3254715561fe260214676aa129db41faf08d3218554d436b0da31f9d"
+    },
+    "src/tusb_option.h": {
+      "bytes": 29428,
+      "sha256": "da06d0b0c1ffac6bdf461332488885debae3c2fa8026238888fd25dc66941f73"
+    }
+  },
+  "archive_url": "https://github.com/hathach/tinyusb/archive/aa410008e8e74b0727f8c30a1ec109ff2c37efc6.zip",
+  "archive_sha256": null,
+  "caution": "Header hashes and file timestamp match. Other commits may share those header blobs. Compare the full local tree before claiming exact restoration."
+}

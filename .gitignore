@@ -1,25 +1,47 @@
 # ---- RP_COMPILER ----
-# Чувствительные данные (пароли, логины, служебные команды)
-# в репозиторий не попадают. В каталоге билдера лежат только
-# примеры (*.example).
-
-# рабочие конфиги билдера
-builder/data/auth.txt
-builder/data/support.txt
-
-# фрагмент с макросами CMD (содержит служебные учётные данные)
-builder/src/20_macros.inc
-
-# результаты сборки и питоновские артефакты
-builder/out/
+# Артефакты сборки компилятора RP2040
+/build/
+/output/*
+!/output/.gitkeep
+/tmp/*
+!/tmp/.gitkeep
+/cmake/bin/*
+!/cmake/bin/.gitkeep
+/toolchain/bin/*
+!/toolchain/bin/.gitkeep
+/python/*
+!/python/.gitkeep
+/pico-sdk/*
+!/pico-sdk/.gitkeep
+*.log
+*.exe
+*.o
+*.elf
+*.bin
+*.uf2
 __pycache__/
 *.pyc
+/compiler_structure_report.txt
+/compiler_structure_report.txt.*.bak
 
-# портативный Python -- ставится через FIRST_SETUP.bat
-runtime/
+/.local-tools/
+/rp2040_final_audit_*.txt
 
-# архивы и служебное
-*.zip
-*.local
+/.audit-transfer/
+/.setup-cache/
+/.setup-work/
+/.setup.lock
+/debug/logs/
+/debug/reports/
+/debug/setup.lock
+
+# Чувствительные данные билдера (пароли, логины, служебные команды)
+# В репозитории хранятся только безопасные шаблоны *.example.
+builder/data/auth.txt
+builder/data/support.txt
+builder/src/20_macros.inc
+builder/out/
+
+# Служебное
 .DS_Store
 Thumbs.db

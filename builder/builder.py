@@ -526,14 +526,59 @@ def build():
     out_file = OUT / "main.cpp"
     out_file.write_bytes(result.replace("\n", "\r\n").encode("ascii"))
 
-    print(f"   [OK] Файл собран: {out_file}")
+    root_file = BASE.parent / "main.cpp"
+    try:
+        root_file.write_bytes(result.replace("\n", "\r\n").encode("ascii"))
+        print(f"   [OK] Файл собран и записан:")
+        print(f"        1) {root_file} (для компилятора)")
+        print(f"        2) {out_file}")
+    except OSError as e:
+        print(f"   [OK] Файл собран: {out_file}")
+        print(f"   [!] Не удалось записать {root_file}: {e}")
+
     print(f"\n        SUPPORT, пунктов: {sup_count}")
     print(f"        AUTH, пунктов:    {auth_count}")
     print("        CMD-макросы:      src\\20_macros.inc")
     print("        Клавиатура:       src\\40_keyboard.inc")
-    print("\n   Дальше: скопируйте out\\main.cpp в ваш проект RP2040")
-    print("   и соберите его Pico SDK как обычно (нужны заголовки")
-    print("   ssd1306_i2c.h и ru_keys.h из вашего проекта).")
+    print("\n   Дальше: выберите пункт [6] COMPILE или запустите compile.bat")
+    print("   для сборки итогового output\\firmware.uf2.")
+    pause()
+
+
+def compile_firmware():
+    clear()
+    print("==================================================")
+    print("      COMPILE :: сборка прошивки (firmware.uf2)")
+    print("==================================================\n")
+    root_main = BASE.parent / "main.cpp"
+    if not root_main.exists() or "PUBLIC PLACEHOLDER ONLY" in root_main.read_text(encoding="utf-8", errors="ignore"):
+        print("   [!] main.cpp ещё не собран (в корне заглушка).")
+        print("       Сначала выполните пункт [5] BUILD.")
+        pause()
+        return
+
+    build_script = BASE.parent / "scripts" / "build_firmware.py"
+    bundled_py = BASE.parent / "python" / "python.exe"
+
+    if os.name == "nt":
+        if not bundled_py.exists():
+            print("   [!] Портативный Python не найден в python\\python.exe.")
+            print("       Запустите first_setup.cmd для установки окружения сборки.")
+            pause()
+            return
+        print("   Запуск компилятора через scripts\\build_firmware.py...\n")
+        res = os.system(f'"{bundled_py}" -I -S -B "{build_script}"')
+    else:
+        print("   Запуск сборки через scripts/build_firmware.py...\n")
+        res = os.system(f'{sys.executable} "{build_script}"')
+
+    uf2 = BASE.parent / "output" / "firmware.uf2"
+    if res == 0 and uf2.exists():
+        print(f"\n   [OK] Прошивка успешно скомпилирована!")
+        print(f"        Файл: {uf2}")
+        print("        Скопируйте его на RP2040 в режиме BOOTSEL (диск RPI-RP2).")
+    else:
+        print("\n   [!] Ошибка сборки прошивки. Подробности см. в debug\\logs\\build.log.")
     pause()
 
 
@@ -550,13 +595,14 @@ def main():
     while True:
         clear()
         print("==================================================")
-        print("   RP2040 SERVICE KEYBOARD :: БИЛДЕР main.cpp")
+        print("   RP2040 SERVICE KEYBOARD :: БИЛДЕР + КОМПИЛЯТОР")
         print("==================================================\n")
         print("  [1] AUTH     -- пароли: добавить / просмотр / удалить")
         print("  [2] SUPPORT  -- фразы:  добавить / просмотр / удалить")
         print("  [3] MACROS   -- модуль макросов CMD (просмотр/правка)")
         print("  [4] KEYBOARD -- модуль клавиатуры (просмотр)")
         print("  [5] BUILD    -- собрать main.cpp")
+        print("  [6] COMPILE  -- скомпилировать firmware.uf2")
         print("  [0] ВЫХОД\n")
         c = ask("Выберите пункт: ").strip()
         if c == "1":
@@ -569,6 +615,8 @@ def main():
             menu_keyboard()
         elif c == "5":
             build()
+        elif c == "6":
+            compile_firmware()
         elif c in ("0", "exit", "выход"):
             print("\nДо свидания!")
             return
