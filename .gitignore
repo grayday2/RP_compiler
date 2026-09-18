@@ -10,11 +10,16 @@ builder/data/support.txt
 # фрагмент с макросами CMD (содержит служебные учётные данные)
 builder/src/20_macros.inc
 
-# результаты и временные файлы сборки
+# результаты сборки и питоновские артефакты
 builder/out/
-builder/tmp/
+__pycache__/
+*.pyc
 
-# служебное
+# портативный Python -- ставится через FIRST_SETUP.bat
+runtime/
+
+# архивы и служебное
+*.zip
 *.local
 .DS_Store
 Thumbs.db
